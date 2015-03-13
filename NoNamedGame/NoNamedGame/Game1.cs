@@ -1,5 +1,4 @@
-﻿#region Using Statements
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -7,83 +6,100 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
-#endregion
+
+// ScreenManager está en otro path que Game1,
+// así que indicamos su path
+using NoNamedGame.Managers;
 
 namespace NoNamedGame
 {
-    /// <summary>
-    /// This is the main type for your game
-    /// </summary>
     public class Game1 : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        //Atributos
+        private GraphicsDeviceManager graphics;
+        private SpriteBatch spriteBatch;
+        private static Game1 instance;
 
-        public Game1()
-            : base()
+        /* Constructor privado
+         * */
+        private Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
+        /* El get de la instancia del Game1
+         * */
+        public static Game1 Instance
+        {
+            get
+            {
+                //Si instance es null, crea una nueva instancia usando el constructor privado
+                if (instance == null)
+                {
+                    instance = new Game1();
+                }
+                return instance;
+            }
+        }
+
+        /* Sirve para inicializar variables. Según Ortega no se usa
+         * */
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
+            ScreenManager.Instance.Initializate(graphics);
             base.Initialize();
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
+        /* Acá se inicializan variables contenido (Imagenes, sonidos, etc) con
+         * ContentManager Content. 
+         * Ejemplo: Tenemos un a variable Texture2D imagenPJ y la queremos cargar.
+         * El archivo .png está en Content//Sprites y se llama PJImagen
+         * imagenPJ = Content.Load<Texture2D>("Sprites//PJImagen");
+         * Easy. 
+         * Al agregar archivos a la carpeta content, hay que hacer click sobre
+         * los mismos y setear la acción de compilación a Contenido y Copiar en el directorio
+         * a copiar siempre. (Copiar si funciona, aveces)
+         * */
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
+            ScreenManager.Instance.LoadContent(Content);
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// all content.
-        /// </summary>
+        /* Sirve para disposear contenido. Nunca lo usé.
+         * Creo que no es necesario, nusé
+         * */
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+            ScreenManager.Instance.UnloadContent(Content);
         }
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        /* Esto es un loop. 1 ciclo = 1 Frame
+         * Sirve para llevar a cabo operaciones lógicas
+         * */
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            // TODO: Add your update logic here
-
+            ScreenManager.Instance.Update(gameTime);
             base.Update(gameTime);
         }
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        /* Draw simplemente dibuja con el SpriteBatch
+         * spriteBatch texturas. En google si nos fijamos
+         * hay muchas formas en las que recibe parámetros,
+         * pudiendo así actuar de maneras diferentes al 
+         * dibujar una textura, como su opacidad, su rotación, su escala,
+         * su color, etc.
+         * Para que Draw dibuje, tiene que haber un spriteBatch.Draw(...)
+         * entre un spriteBatch.Begin() y un spriteBatch.End()
+         * */
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            ScreenManager.Instance.Draw(spriteBatch);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }

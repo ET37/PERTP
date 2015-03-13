@@ -18,7 +18,11 @@ namespace NoNamedGame
         [STAThread]
         static void Main()
         {
-            using (var game = new Game1())
+            /* Como el constructor de Game1 ya no es accesible 
+             * por su visibilidad, usandola como Singleton accedemos
+             * a la clase por su instancia
+             * */
+            using (var game = Game1.Instance)
                 game.Run();
         }
     }
