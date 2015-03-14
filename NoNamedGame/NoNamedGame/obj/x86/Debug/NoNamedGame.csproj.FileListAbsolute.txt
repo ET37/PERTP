@@ -23,3 +23,5 @@ C:\Users\Ludebe\Documents\GitHub\PERTP\NoNamedGame\NoNamedGame\bin\Windows\Debug
 C:\Users\Ludebe\Documents\GitHub\PERTP\NoNamedGame\NoNamedGame\obj\x86\Debug\NoNamedGame.csprojResolveAssemblyReference.cache
 C:\Users\Ludebe\Documents\GitHub\PERTP\NoNamedGame\NoNamedGame\obj\x86\Debug\NoNamedGame.exe
 C:\Users\Ludebe\Documents\GitHub\PERTP\NoNamedGame\NoNamedGame\obj\x86\Debug\NoNamedGame.pdb
+C:\Users\Seba\Documents\GitHub\pertp\PERTP\NoNamedGame\NoNamedGame\obj\x86\Debug\NoNamedGame.exe
+C:\Users\Seba\Documents\GitHub\pertp\PERTP\NoNamedGame\NoNamedGame\obj\x86\Debug\NoNamedGame.pdb
