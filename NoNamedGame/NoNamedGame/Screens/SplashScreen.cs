@@ -14,9 +14,14 @@ using NoNamedGame.Managers;
 
 namespace NoNamedGame.Screens
 {
-    /*Aclaración: Los atributos se crean públicos para que 
+    /*Aclaración 1: Los atributos se crean públicos para que 
      * el XmlSerializator los pueda instanciar, de lo contrario
      * no funciona. */
+
+    /*Aclaración 2: Para que el juego cargue correctamente las
+     * SplashImages se tienen que llamar como archivo 'SplashImageN',
+     * siendo la última letra N el número de splash. (Se empieza desde 0)
+     *  Ejemplo: SplashImage0 - SplashImage1 - SplashImage2*/
     public class SplashScreen : Screen
     {
         //Path base de las SplashImages
