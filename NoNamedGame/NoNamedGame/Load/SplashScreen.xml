@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SplashScreen>
+  <imagesPath>SplashImages/SplashImage</imagesPath>
+  <alpha>1</alpha>
+  <splashImageNumber>1</splashImageNumber>
+  <fadeSpeed>1</fadeSpeed>
+  <pauseTime>2</pauseTime>
+</SplashScreen>

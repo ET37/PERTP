@@ -12,7 +12,12 @@ namespace NoNamedGame.Managers
         //Como es una clase genérica, todas las variables solo pueden ser Type :0
         public Type Type;
 
+        public XmlManager()
+        {
+            this.Type = typeof(T);
+        }
 
+        //Métodos-Funciones
         public T Load(string path)
         {
             T instance;
@@ -27,7 +32,7 @@ namespace NoNamedGame.Managers
 
         public void Save(string path, object obj)
         {
-            using (TextWriter writer = new StreamWriter(path)) 
+            using (TextWriter writer = new StreamWriter(path))
             {
                 XmlSerializer serializer = new XmlSerializer(Type);
                 serializer.Serialize(writer, obj);
