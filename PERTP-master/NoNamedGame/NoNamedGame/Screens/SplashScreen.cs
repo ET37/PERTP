@@ -28,12 +28,6 @@ namespace NoNamedGame.Screens
         private int splashImageNumber;
         private int splashImageNumberLimit;
 
-        //Transparencia de las splashImages
-        public float alpha;
-        public float fadeSpeed;
-        //Timepo en que la splashImage se mostrará en pantalla
-        public float pauseTime;
-
         //Para que no se busque instanciar con XmlSerialization
         [XmlIgnore]
 
@@ -67,7 +61,13 @@ namespace NoNamedGame.Screens
                 while (true)
                 {
                     Image image = new Image(imagesPath + splashImageNumber.ToString(), Vector2.Zero, Vector2.One, 1.0F);
+                    //No se pone solo FadeEffect, se pone las subcarpetas con puntos y el efecto al final
+                    //Estuve como 25 min para darme cuenta -.-" t-t En el video no lo dice porque no lo tiene en subfolder
+                    image.effects.Add("ImageEffects.FadeEffect");
+                    image.isActive = true;
                     image.Loadcontent(Content);
+                    image.fadeEffect.fadeSpeed = 0.5F;
+                    image.fadeEffect.pauseTimeSeconds = 2.0F;
                     splashImages.Add(image);
                     splashImageNumber++;
                 }
@@ -90,6 +90,8 @@ namespace NoNamedGame.Screens
         {
             if (splashImages.Count == 0)
                 ChangeScreen();
+
+            splashImages[splashImageNumber].Update(gameTime);
 
             //Cambia de splashImage al tocar enter
             if (InputManager.Instance.KeyReleased(Keys.Enter))

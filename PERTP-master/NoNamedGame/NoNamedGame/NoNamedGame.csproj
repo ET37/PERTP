@@ -35,6 +35,8 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ImageEffects\FadeEffect.cs" />
+    <Compile Include="ImageEffects\ImageEffect.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="Managers\ScreenManager.cs" />

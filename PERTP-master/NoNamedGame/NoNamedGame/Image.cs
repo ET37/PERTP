@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 using NoNamedGame.Managers;
+using NoNamedGame.ImageEffects;
 
 namespace NoNamedGame
 {
@@ -18,6 +20,7 @@ namespace NoNamedGame
         public Vector2 position, scale;
         public String fontName, text, path;
         public float alpha;
+        public Boolean isActive;
 
         [XmlIgnore]
         public Texture2D texture;
@@ -30,6 +33,11 @@ namespace NoNamedGame
         private RenderTarget2D renderTarget;
         private SpriteFont font;
 
+        //Se crea uin diccionario con índice String y valor Effect
+        private Dictionary<String, ImageEffect> effectDictionary;
+        public FadeEffect fadeEffect;
+        public ArrayList effects;
+
         /* Van a existir 3 constructores:
          * El primero existe por si se quiere serializar con
          * xml. 
@@ -41,11 +49,14 @@ namespace NoNamedGame
         public Image()
         {
             path = text = String.Empty;
+            effects = new ArrayList();
             position = Vector2.Zero;
             fontName = "MyFont";
             scale = Vector2.One;
             alpha = 1.0F;
             sourceRect = Rectangle.Empty;
+
+            effectDictionary = new Dictionary<string, ImageEffect>();
         }
 
         //Constructor 'dinámico' sin texto
@@ -57,19 +68,25 @@ namespace NoNamedGame
             this.alpha = alpha;
 
             text = String.Empty;
+            effects = new ArrayList();
             fontName = "MyFont";
+
+            effectDictionary = new Dictionary<string, ImageEffect>();
         }
 
         //Constructor 'dinámico' con texto
         public Image(String path, String text, Vector2 position, String fontName,
                      Vector2 scale, float alpha)
         {
+            effects = new ArrayList();
             this.path = path;
             this.text = text;
             this.position = position;
             this.fontName = fontName;
             this.scale = scale;
             this.alpha = alpha;
+
+            effectDictionary = new Dictionary<string, ImageEffect>();
         }
 
         /* Lo que va a hacer este LoadContent, como se sabe, es instanciar variables.
@@ -88,7 +105,7 @@ namespace NoNamedGame
          * En realidad si no hay texto, no haría falta ejecutar medio LoadContent(), así
          * que éste método se puede mejorar para no malgastar procesos innecesarios.
          * */
-        public void Loadcontent(ContentManager Content) 
+        public void Loadcontent(ContentManager Content)
         {
             //Si el path no está vacío, carga la textura.
             if (path != String.Empty)
@@ -115,9 +132,9 @@ namespace NoNamedGame
 
             //Dibuja la imagen o el texto
             ScreenManager.Instance.spriteBatch.Begin();
-            if(texture != null)
+            if (texture != null)
                 ScreenManager.Instance.spriteBatch.Draw(texture, Vector2.Zero, Color.White);
-            if(text != null)
+            if (text != null)
                 ScreenManager.Instance.spriteBatch.DrawString(font, text, Vector2.Zero, Color.White);
             ScreenManager.Instance.spriteBatch.End();
 
@@ -126,26 +143,97 @@ namespace NoNamedGame
 
             //Al setear el graphicsDevice nulo, vuelve a cargarse el default.
             ScreenManager.Instance.graphicsDevice.SetRenderTarget(null);
+
+            //Se setea un efecto al diccionario. Si hay más, agregalos.
+            SetImageEffect<FadeEffect>(ref fadeEffect);
+
+            //Si el String de efectos no está vacío, los activa.
+            if (effects.Count != 0)
+            {
+                foreach (String ef in effects)
+                    ActivateImageEffect(ef);
+            }
         }
 
-        public void Unloadcontent(){}
+        public void Unloadcontent() { }
 
-        public void Update(){}
+        public void Update(GameTime gametime)
+        {
+            //Ejecuta los efectos del diccionario que estén activos.
+            foreach (var effect in effectDictionary)
+            {
+                if (effect.Value.isActive)
+                    effect.Value.Update(gametime);
+            }
+        }
 
-        public void Draw(SpriteBatch spriteBatch) 
+        public void Draw(SpriteBatch spriteBatch)
         {
             //Si pasamos una position x=100 y=100, la punta suprerior izquierda 
             //sería la que esté en esa posición realmente.
             //Lo que hace origin es que esas coordenadas en position
             //sean el centro de la imágen.
             origin = new Vector2(sourceRect.X / 2, sourceRect.Y / 2);
-            spriteBatch.Draw(texture, position + origin, sourceRect, Color.White * alpha, 
+            spriteBatch.Draw(texture, position + origin, sourceRect, Color.White * alpha,
                 0.0F, origin, scale, SpriteEffects.None, 0.0F);
+        }
+
+
+        // |------------------Métodos-Funciones---------------------|
+
+        /* Se cambian los valores del effect pasado por parámetro
+         * sino es que se cambia el mismo.
+         * Como se pasa por referencia, cualquier efecto que le 
+         * pasemos, si lo cambiamos también se cambia en el diccionario,
+         * por eso lo dejamos como público en el caso de FadeEffect
+         * */
+        private void SetImageEffect<T>(ref T effect)
+        {
+            //Si el efecto es nulo, lo instancia con Activator.
+            if (effect == null)
+                effect = (T)Activator.CreateInstance(typeof(T));
+
+            //Sino, lo carga.
+            else
+            {
+                var obj = this;
+                (effect as ImageEffect).LoadContent(ref obj);
+            }
+
+            //Al final, lo agrega al diccionario.
+            effectDictionary.Add(effect.GetType().ToString().Replace("NoNamedGame.", String.Empty), (effect as ImageEffect));
+        }
+
+        /* Se activa un efecto del diccionario de efectos
+         * */
+        public void ActivateImageEffect(String effects)
+        {
+            //Activa los que estén el el String effects. (Por ejemplo, en la clase SplashScreen
+            //se crea la imagen, y luego se le setea effects = "ImageEffects.FadeEffect". 
+            //Si "ImageEffects.FadeEffect está en el diccionario, lo activa.)
+            if (effectDictionary.ContainsKey(effects))
+            {
+                effectDictionary[effects].isActive = true;
+                var obj = this;
+                effectDictionary[effects].LoadContent(ref obj);
+            }
+        }
+
+        /* Bueno... te imaginas (?
+         * */
+        public void DeactivateImageEffect(String effect)
+        {
+            //blabla
+            if (effectDictionary.ContainsKey(effect))
+            {
+                effectDictionary[effect].isActive = false;
+                //Unload content no necesario. Garbage colector OP
+            }
         }
 
         /* Se encarga de instanciar correctamente el sourceRect
          * calculando las medidas de la textura y/o del texto*/
-        private Rectangle DefinirSourceRect() 
+        private Rectangle DefinirSourceRect()
         {
             Rectangle sourceRect = new Rectangle();
 
@@ -155,7 +243,7 @@ namespace NoNamedGame
 
             //MeasureString devuelve un Vector2 con el Width y Height del texto 
             //teniendo en cuenta las propiedades de la fuente
-            dimensions.X += font.MeasureString(text).X; 
+            dimensions.X += font.MeasureString(text).X;
 
             if (texture != null)
                 dimensions.Y += Math.Max(texture.Width, font.MeasureString(text).Y);
