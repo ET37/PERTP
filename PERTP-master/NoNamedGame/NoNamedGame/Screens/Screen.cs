@@ -13,11 +13,7 @@ namespace NoNamedGame.Screens
     {
         public Type Type;
 
-        public abstract void Initializate();
-
         public abstract void LoadContent(ContentManager Content);
-
-        public abstract void UnloadContent(ContentManager Content);
 
         public abstract void Update(GameTime gameTime);
 

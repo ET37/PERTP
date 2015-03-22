@@ -16,9 +16,10 @@ namespace NoNamedGame
     public class Game1 : Game
     {
         //Atributos
-        private GraphicsDeviceManager graphics;
-        private SpriteBatch spriteBatch;
         private static Game1 instance;
+        public GraphicsDeviceManager graphics;
+        public SpriteBatch spriteBatch;
+        
 
         /* Constructor privado
          * */
@@ -44,10 +45,11 @@ namespace NoNamedGame
         }
 
         /* Sirve para inicializar variables. Según Ortega no se usa
-         * */
+         *
+         * No lo vamos a usar
+         **/
         protected override void Initialize()
         {
-            ScreenManager.Instance.Initializate(graphics);
             base.Initialize();
         }
 
@@ -65,22 +67,16 @@ namespace NoNamedGame
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            //Se inicializan estas 3 variables porque a veces van a ser necesarias
-            //llamarlas y no solo usarlas en su método correspondiente*/
-            ScreenManager.Instance.Content = Content;
-            ScreenManager.Instance.spriteBatch = spriteBatch;
-            ScreenManager.Instance.graphics = graphics;
-            ScreenManager.Instance.graphicsDevice = GraphicsDevice;
-
             ScreenManager.Instance.LoadContent(Content);
         }
 
         /* Sirve para disposear contenido. Nunca lo usé.
-         * Creo que no es necesario, nusé
-         * */
+         *
+         * No lo vamos a usar
+         **/
         protected override void UnloadContent()
         {
-            ScreenManager.Instance.UnloadContent(Content);
+
         }
 
         /* Esto es un loop. 1 ciclo = 1 Frame

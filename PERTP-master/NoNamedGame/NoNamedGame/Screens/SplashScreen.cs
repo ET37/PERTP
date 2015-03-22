@@ -14,10 +14,7 @@ using NoNamedGame.Managers;
 
 namespace NoNamedGame.Screens
 {
-    /*Aclaración 1: Los atributos se crean públicos para que 
-     * el XmlSerializator los pueda instanciar, de lo contrario
-     * no funciona. */
-    /*Aclaración 2: Para que el juego cargue correctamente las
+    /*Aclaración 1: Para que el juego cargue correctamente las
      * SplashImages se tienen que llamar como archivo 'SplashImageN',
      * siendo la última letra N el número de splash. (Se empieza desde 0)
      *  Ejemplo: SplashImage0 - SplashImage1 - SplashImage2*/
@@ -28,16 +25,22 @@ namespace NoNamedGame.Screens
         private int splashImageNumber;
         private int splashImageNumberLimit;
 
-        //Para que no se busque instanciar con XmlSerialization
-        [XmlIgnore]
+        private MouseState oldMouseState;
+        private MouseState newMouseState;
 
+
+        //La imágen negra
+        private Image fadeImage;
         //Implementación Image
         private List<Image> splashImages;
 
 
-        public override void Initializate()
+        public SplashScreen()
         {
             splashImages = new List<Image>();
+            imagesPath = "SplashImages/SplashImage";
+            newMouseState = Mouse.GetState();
+            oldMouseState = newMouseState;
         }
 
         /* Se cargan todas las SplashImages de la carpeta en un while(true)
@@ -61,13 +64,8 @@ namespace NoNamedGame.Screens
                 while (true)
                 {
                     Image image = new Image(imagesPath + splashImageNumber.ToString(), Vector2.Zero, Vector2.One, 1.0F);
-                    //No se pone solo FadeEffect, se pone las subcarpetas con puntos y el efecto al final
-                    //Estuve como 25 min para darme cuenta -.-" t-t En el video no lo dice porque no lo tiene en subfolder
-                    image.effects.Add("ImageEffects.FadeEffect");
-                    image.isActive = true;
-                    image.Loadcontent(Content);
-                    image.fadeEffect.fadeSpeed = 0.5F;
-                    image.fadeEffect.pauseTimeSeconds = 2.0F;
+
+                    image.Loadcontent();
                     splashImages.Add(image);
                     splashImageNumber++;
                 }
@@ -77,27 +75,42 @@ namespace NoNamedGame.Screens
             {
                 splashImageNumberLimit = splashImageNumber - 1;
                 splashImageNumber = 0;
+                fadeImage = new Image("Fade", Vector2.Zero, Vector2.One, 1.0F);
+                //No se pone solo FadeEffect, se pone las subcarpetas con puntos y el efecto al final
+                //Estuve como 25 min para darme cuenta -.-" t-t En el video no lo dice porque no lo tiene en subfolder
+                fadeImage.effects.Add("ImageEffects.FadeEffect");
+                fadeImage.isActive = true;
+
+                //Las modificaciones que forman parte del 
+                //efecto de la imagen se realizan después del LoadContent()
+                fadeImage.Loadcontent();
+                fadeImage.fadeEffect.fadeSpeed = 0.5F;
+                fadeImage.fadeEffect.pauseTimeSeconds = 3.0F;
+                fadeImage.fadeEffect.pausaEnAlphaUno = false;
             }
         }
 
-        public override void UnloadContent(ContentManager Content)
-        {
-
-        }
-
-        //Se encarga del fadeIn y fadeOut de las splashImages
+        /*Se encarga del fadeIn y fadeOut de las splashImages
+         * */
         public override void Update(GameTime gameTime)
         {
+            newMouseState = Mouse.GetState();
             if (splashImages.Count == 0)
-                ChangeScreen();
+                ChangeSplashImage();
 
-            splashImages[splashImageNumber].Update(gameTime);
+            //No necesario porque las splashimages no tienen efectos, 
+            //lo comento para no gastar proceso.
+            //splashImages[splashImageNumber].Update(gameTime);
+            fadeImage.Update(gameTime);
 
-            //Cambia de splashImage al tocar enter
-            if (InputManager.Instance.KeyReleased(Keys.Enter))
+            //Cambia de splashImage al tocar enter o luego del fade
+            if (InputManager.Instance.KeyReleased(Keys.Enter) || (oldMouseState.LeftButton == ButtonState.Released && newMouseState.LeftButton == ButtonState.Pressed) || fadeImage.alpha == 1.0F)
             {
-                ChangeScreen();
+                ChangeSplashImage();
             }
+
+
+            oldMouseState = newMouseState;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -105,10 +118,17 @@ namespace NoNamedGame.Screens
             //Llama al método Draw de la Image correspondiente
             if (splashImages.Count != 0)
                 splashImages[splashImageNumber].Draw(spriteBatch);
+
+            fadeImage.Draw(spriteBatch);
         }
 
-        private void ChangeScreen() 
+        /* Cambia de splashImage, si se supea el límite, se va
+         * al MenuScreen*/
+        private void ChangeSplashImage() 
         {
+            splashImages[splashImageNumber].isActive = false;
+            //Para saltearse la splashimage actual y continúe con la siguiente
+            fadeImage.alpha = 1.0F;
             splashImageNumber++;
 
             //Si el índice se pasa del límite, cambia de SplashScreen a MenuScreen

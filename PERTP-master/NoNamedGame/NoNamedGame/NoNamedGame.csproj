@@ -35,15 +35,20 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Buttons\Button.cs" />
+    <Compile Include="Buttons\ButtonJugar.cs" />
+    <Compile Include="Buttons\ButtonOpciones.cs" />
+    <Compile Include="Buttons\ButtonSalir.cs" />
     <Compile Include="ImageEffects\FadeEffect.cs" />
     <Compile Include="ImageEffects\ImageEffect.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="Managers\ScreenManager.cs" />
     <Compile Include="Managers\InputManager.cs" />
-    <Compile Include="Managers\XmlManager.cs" />
+    <Compile Include="Managers\XMLManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Screens\InGameScreen.cs" />
     <Compile Include="Screens\MenuScreen.cs" />
     <Compile Include="Screens\Screen.cs" />
     <Compile Include="Screens\SplashScreen.cs" />
@@ -56,7 +61,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\MenuScreen\MenuImage.png">
+    <Content Include="Content\MenuScreen\DrBostrom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MenuScreen\Background.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Fade.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MenuScreen\Cube.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MenuScreen\Energy.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MenuScreen\Infinite.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MenuScreen\Logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MenuScreen\Chemistry.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MenuScreen\Jugar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MenuScreen\Opciones.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MenuScreen\Salir.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MenuScreen\Triangle.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\SplashImages\SplashImage0.png">
@@ -68,15 +106,7 @@
     <Content Include="Content\SplashImages\SplashImage2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\TransitionImage.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Icon.ico" />
-    <Content Include="XMLLoad\MenuScreen.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="XMLLoad\ScreenManager.xml" />
-    <Content Include="XMLLoad\SplashScreen.xml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

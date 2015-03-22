@@ -41,7 +41,7 @@ namespace NoNamedGame.Managers
         {
             foreach (Keys key in keys)
             {
-                if (oldKeyboardState.IsKeyDown(key) && newKeyboardState.IsKeyDown(key))
+                if (oldKeyboardState.IsKeyDown(key) && newKeyboardState.IsKeyUp(key))
                     return true;
             }
 

@@ -25,11 +25,6 @@ namespace NoNamedGame.ImageEffects
             this.image = image;
         }
 
-        public virtual void UnloadContent()
-        {
-
-        }
-
         public virtual void Update(GameTime gameTime)
         {
 

@@ -10,10 +10,20 @@ namespace NoNamedGame.ImageEffects
     public class FadeEffect : NoNamedGame.ImageEffects.ImageEffect
     {
         //Atributos
+
+        //Velocidad de fade
         public float fadeSpeed;
+        //El tiempo en segundos en que se dentendrá el fade effect
+        //(Sirve como por ejemplo para que las splash image queden mostrándose
+        //en pantalla x segundos, y no se muestre y al toque haga fadeout)
         public float pauseTimeSeconds;
+        //Boolean de control
         private Boolean increasing;
+        //Si es true (el por defecto), la pausa se realiza cuando Alpha=1. sino en alpha=0
+        public Boolean pausaEnAlphaUno;
+        //Boolean de control
         private Boolean onPause;
+        //Contador para el onPause
         private float onPauseCounter;
 
         public FadeEffect()
@@ -23,16 +33,12 @@ namespace NoNamedGame.ImageEffects
             pauseTimeSeconds = 0;
             increasing = false;
             onPause = false;
+            pausaEnAlphaUno = true;
         }
 
         public override void LoadContent(ref Image image)
         {
             base.image = image;
-        }
-
-        public override void UnloadContent()
-        {
-
         }
 
         /* Este método lleva a cabo los cambios de valores
@@ -51,18 +57,22 @@ namespace NoNamedGame.ImageEffects
                     else
                         image.alpha -= fadeSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                    //Si alcanza 1.0 0 0.0, cambia el increasing
+                    //Si alcanza 1.0 o 0.0, cambia el increasing
                     if (image.alpha >= 1.0F)
                     {
                         increasing = false;
                         image.alpha = 1.0F;
-                        onPause = true;
+
+                        if (pausaEnAlphaUno)
+                            onPause = true;
                     }
 
                     else if (image.alpha <= 0.0F)
                     {
                         increasing = true;
                         image.alpha = 0.0F;
+                        if (!pausaEnAlphaUno)
+                            onPause = true;
                     }
                 }
 

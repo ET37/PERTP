@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Xml.Serialization;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -16,23 +15,10 @@ namespace NoNamedGame.Managers
     public class ScreenManager
     {
         //Atributos
-        [XmlIgnore]
         private static ScreenManager instance;
-        [XmlIgnore]
-        public GraphicsDeviceManager graphics;
-        [XmlIgnore]
-        public GraphicsDevice graphicsDevice;
-        [XmlIgnore]
-        public ContentManager Content;
-        [XmlIgnore]
-        public SpriteBatch spriteBatch;
         public Vector2 dimensions;
-        [XmlIgnore]
         private Screen currentScreen;
-        [XmlIgnore]
         private Screen oldScreen;
-        [XmlIgnore]
-        private XmlManager<Screen> xmlManager;
         public Boolean isTransitioning;
 
         //Constructor privado
@@ -42,10 +28,11 @@ namespace NoNamedGame.Managers
             currentScreen = new SplashScreen();
             oldScreen = currentScreen;
 
-            //Se instancia el xmlManager
-            xmlManager = new XmlManager<Screen>();
-            xmlManager.Type = currentScreen.GetType();
-            currentScreen = xmlManager.Load("XMLLoad/SplashScreen.xml");
+            dimensions.X = 800;
+            dimensions.Y = 600;
+
+            SetDimensions(dimensions);
+            Game1.Instance.IsMouseVisible = true;
         }
 
         public static ScreenManager Instance
@@ -57,9 +44,8 @@ namespace NoNamedGame.Managers
                 {
                     //Se instancia desde el constructor
                     instance = new ScreenManager();
-                    //Y desde ScreenManager.xml
-                    XmlManager<ScreenManager> xml = new XmlManager<ScreenManager>();
-                    instance = xml.Load("XMLLoad/ScreenManager.xml");
+
+
                 }
                 return instance;
             }
@@ -67,25 +53,9 @@ namespace NoNamedGame.Managers
 
         // |-----------------Métodos comunes-------------------|
 
-        public void Initializate(GraphicsDeviceManager graphics) 
-        {
-            this.graphics = graphics;
-
-            SetDimensions(dimensions);
-
-            Game1.Instance.IsMouseVisible = true;
-
-            currentScreen.Initializate();
-        }
-
         public void LoadContent(ContentManager Content) 
         {
             currentScreen.LoadContent(Content);
-        }
-
-        public void UnloadContent(ContentManager Content)
-        {
-            currentScreen.UnloadContent(Content);
         }
 
         public void Update(GameTime gameTime)
@@ -114,9 +84,8 @@ namespace NoNamedGame.Managers
             {
                 //Acá iría el fade in-out en Image.Update()
                 oldScreen = currentScreen;
-                xmlManager.Type = currentScreen.Type;
-                currentScreen = xmlManager.Load("XMLLoad/" + currentScreen.GetType().ToString().Replace("NoNamedGame.Screens.","") + ".xml");
                 currentScreen.LoadContent(Game1.Instance.Content);
+                isTransitioning = false;
             }
         }
 
@@ -132,9 +101,9 @@ namespace NoNamedGame.Managers
             this.dimensions = dimensions;
 
             //Si sólo cambiamos las dimensiones no pasa nada, hay que aplicar cambios y cambiar el PreferedBackBuffer
-            graphics.PreferredBackBufferWidth = Convert.ToInt32(dimensions.X);
-            graphics.PreferredBackBufferHeight = Convert.ToInt32(dimensions.Y);
-            graphics.ApplyChanges();
+            Game1.Instance.graphics.PreferredBackBufferWidth = Convert.ToInt32(dimensions.X);
+            Game1.Instance.graphics.PreferredBackBufferHeight = Convert.ToInt32(dimensions.Y);
+            Game1.Instance.graphics.ApplyChanges();
         }
     }
 }

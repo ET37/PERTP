@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ScreenManager>
-  <dimensions>
-    <X>800</X>
-    <Y>600</Y>
-  </dimensions>
-  <isTransitioning>false</isTransitioning>
-</ScreenManager>

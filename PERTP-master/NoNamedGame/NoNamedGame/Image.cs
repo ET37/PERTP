@@ -17,7 +17,9 @@ namespace NoNamedGame
     public class Image
     {
         //Atributos
-        public Vector2 position, scale;
+        public Vector2 speed;
+        public Vector2 position;
+        public Vector2 scale;
         public String fontName, text, path;
         public float alpha;
         public Boolean isActive;
@@ -62,6 +64,7 @@ namespace NoNamedGame
         //Constructor 'dinámico' sin texto
         public Image(String path, Vector2 position, Vector2 scale, float alpha)
         {
+            speed = Vector2.Zero;
             this.path = path;
             this.position = position;
             this.scale = scale;
@@ -78,6 +81,7 @@ namespace NoNamedGame
         public Image(String path, String text, Vector2 position, String fontName,
                      Vector2 scale, float alpha)
         {
+            speed = Vector2.Zero;
             effects = new ArrayList();
             this.path = path;
             this.text = text;
@@ -105,14 +109,14 @@ namespace NoNamedGame
          * En realidad si no hay texto, no haría falta ejecutar medio LoadContent(), así
          * que éste método se puede mejorar para no malgastar procesos innecesarios.
          * */
-        public void Loadcontent(ContentManager Content)
+        public void Loadcontent()
         {
             //Si el path no está vacío, carga la textura.
             if (path != String.Empty)
-                texture = ScreenManager.Instance.Content.Load<Texture2D>(path);
+                texture = Game1.Instance.Content.Load<Texture2D>(path);
 
             //Instancia la fuente y la dimensión que pertenecerá al sourceRect (Área de la image)
-            font = ScreenManager.Instance.Content.Load<SpriteFont>("Fonts/" + fontName);
+            font = Game1.Instance.Content.Load<SpriteFont>("Fonts/" + fontName);
 
             //Se define el sourceRect
             sourceRect = DefinirSourceRect();
@@ -124,25 +128,25 @@ namespace NoNamedGame
             //Ver en el commit de GitHub el link para más info
 
             //Se setea el renderTarget a sólo el área del sourceRect
-            renderTarget = new RenderTarget2D(ScreenManager.Instance.graphicsDevice, (int)sourceRect.Width, (int)sourceRect.Height);
+            renderTarget = new RenderTarget2D(Game1.Instance.graphics.GraphicsDevice, (int)sourceRect.Width, (int)sourceRect.Height);
 
             //Se setea el render target de ScreenManager al render recién creado
-            ScreenManager.Instance.graphicsDevice.SetRenderTarget(renderTarget);
-            ScreenManager.Instance.graphicsDevice.Clear(Color.Transparent);
+            Game1.Instance.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
+            Game1.Instance.graphics.GraphicsDevice.Clear(Color.Transparent);
 
             //Dibuja la imagen o el texto
-            ScreenManager.Instance.spriteBatch.Begin();
+            Game1.Instance.spriteBatch.Begin();
             if (texture != null)
-                ScreenManager.Instance.spriteBatch.Draw(texture, Vector2.Zero, Color.White);
+                Game1.Instance.spriteBatch.Draw(texture, Vector2.Zero, Color.White);
             if (text != null)
-                ScreenManager.Instance.spriteBatch.DrawString(font, text, Vector2.Zero, Color.White);
-            ScreenManager.Instance.spriteBatch.End();
+                Game1.Instance.spriteBatch.DrawString(font, text, Vector2.Zero, Color.White);
+            Game1.Instance.spriteBatch.End();
 
             //Acá me cagaste ^~^U
             texture = renderTarget;
 
             //Al setear el graphicsDevice nulo, vuelve a cargarse el default.
-            ScreenManager.Instance.graphicsDevice.SetRenderTarget(null);
+            Game1.Instance.graphics.GraphicsDevice.SetRenderTarget(null);
 
             //Se setea un efecto al diccionario. Si hay más, agregalos.
             SetImageEffect<FadeEffect>(ref fadeEffect);
@@ -154,8 +158,6 @@ namespace NoNamedGame
                     ActivateImageEffect(ef);
             }
         }
-
-        public void Unloadcontent() { }
 
         public void Update(GameTime gametime)
         {
@@ -246,7 +248,7 @@ namespace NoNamedGame
             dimensions.X += font.MeasureString(text).X;
 
             if (texture != null)
-                dimensions.Y += Math.Max(texture.Width, font.MeasureString(text).Y);
+                dimensions.Y += Math.Max(texture.Height, font.MeasureString(text).Y);
 
             else
                 dimensions.Y += font.MeasureString(text).Y;
