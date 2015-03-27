@@ -61,7 +61,7 @@ namespace NoNamedGame
 
         public override void OnClick() 
         {
-            //Managers.ScreenManager.Instance.ChangeScreen("InGameScreen");
+            Managers.ScreenManager.Instance.ChangeScreen("InGameScreen");
         }
     }
 }

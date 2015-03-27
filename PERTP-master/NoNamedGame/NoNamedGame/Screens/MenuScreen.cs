@@ -150,7 +150,7 @@ namespace NoNamedGame.Screens
 
             //Acomoda al señor doctor en el botón seleccionado
             drBostrom.position.X = buttons[drBostromButton].position.X - drBostrom.texture.Width - drBostromFromButton.X;
-            drBostrom.position.Y = buttons[drBostromButton].position.Y;
+            drBostrom.position.Y = buttons[drBostromButton].position.Y + 5;
 
             if (Managers.InputManager.Instance.KeyPressed(Keys.Enter))
                 buttons[drBostromButton].OnClick();
@@ -220,7 +220,7 @@ namespace NoNamedGame.Screens
         }
 
         /*Controla al DrBostrom de botón en botón con las arrowkeys
-                 * */
+         * */
         private void KeysControl()
         {
             if (Managers.InputManager.Instance.KeyPressed(Keys.Up) || Managers.InputManager.Instance.KeyPressed(Keys.Left))

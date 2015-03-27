@@ -38,8 +38,9 @@ namespace NoNamedGame
         //Se crea uin diccionario con índice String y valor Effect
         private Dictionary<String, ImageEffect> effectDictionary;
         public FadeEffect fadeEffect;
+        public SpriteSheetEffect spriteSheetEffect;
         public ArrayList effects;
-
+       
         /* Van a existir 3 constructores:
          * El primero existe por si se quiere serializar con
          * xml. 
@@ -150,6 +151,7 @@ namespace NoNamedGame
 
             //Se setea un efecto al diccionario. Si hay más, agregalos.
             SetImageEffect<FadeEffect>(ref fadeEffect);
+            SetImageEffect<SpriteSheetEffect>(ref spriteSheetEffect);
 
             //Si el String de efectos no está vacío, los activa.
             if (effects.Count != 0)
@@ -213,6 +215,7 @@ namespace NoNamedGame
             //Activa los que estén el el String effects. (Por ejemplo, en la clase SplashScreen
             //se crea la imagen, y luego se le setea effects = "ImageEffects.FadeEffect". 
             //Si "ImageEffects.FadeEffect está en el diccionario, lo activa.)
+            effects = "ImageEffects." + effects;
             if (effectDictionary.ContainsKey(effects))
             {
                 effectDictionary[effects].isActive = true;
