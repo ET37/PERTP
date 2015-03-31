@@ -68,7 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Gameplay\player.jpg" />
+    <Content Include="Content\Gameplay\player.png" />
     <Content Include="Content\MenuScreen\DrBostrom.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

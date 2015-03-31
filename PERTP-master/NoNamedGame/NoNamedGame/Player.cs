@@ -151,7 +151,7 @@ namespace NoNamedGame
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            Image.scale = new Vector2(2, 2);
+            //Image.scale = new Vector2(2, 2);
             Image.Draw(spriteBatch);
         }
 
