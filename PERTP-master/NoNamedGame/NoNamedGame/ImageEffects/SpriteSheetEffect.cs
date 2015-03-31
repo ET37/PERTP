@@ -9,12 +9,14 @@ namespace NoNamedGame.ImageEffects
 {
     public class SpriteSheetEffect : ImageEffect
     {
-        public int FrameCounter;
-        public int SwitchFrame;
+        /* Atributos */
+        public float FrameCounter;                   //???
+        public const int SWITCH_FRAME = 100;        //Velocidad del cambio de frame
 
-        public Vector2 currentFrame;
-        public Vector2 amountOfFrames;
+        public Vector2 currentFrame;                 //Frame (posición en X/Y) actual
+        public Vector2 amountOfFrames;               //Cantidad total de frames (fila-columna) del sprite
 
+        //Ancho de cada frame
         public int FrameWidth
         {
             get
@@ -25,6 +27,7 @@ namespace NoNamedGame.ImageEffects
             }
         }
 
+        //Alto de cada frame
         public int FrameHeight
         {
             get
@@ -35,12 +38,18 @@ namespace NoNamedGame.ImageEffects
             }
         }
 
+        /*
+         * Constructor
+         * 
+         */
         public SpriteSheetEffect()
         {
-            amountOfFrames = new Vector2(4, 1);
-            currentFrame = new Vector2(1, 0);
-            FrameCounter = 3;
-            SwitchFrame = 18;
+            //Cantidad de frames que tiene el sprite
+            amountOfFrames  = new Vector2(4, 1);
+            //Posicion actual (Frame) del sprite
+            currentFrame    = new Vector2(1, 0);
+            //Contador
+            FrameCounter    = 0;
         }
 
         public override void LoadContent(ref Image image)
@@ -51,19 +60,34 @@ namespace NoNamedGame.ImageEffects
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            //Si la imagen está activa (se tocan teclas, etc...)
             if (image.isActive)
             {
-                FrameCounter += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
-                if (FrameCounter >= SwitchFrame)
+                //Cambia el n° de frame
+                FrameCounter += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                //Cambia el frame (posición en X)
+                if (FrameCounter >= SWITCH_FRAME)
                 {
                     FrameCounter = 0;
                     currentFrame.X++;
 
-                    if (currentFrame.X * FrameWidth >= image.texture.Width)
-                        currentFrame.X = 0;
+                    //Si se pasó de los límites lo reinicia
+                    if (currentFrame.X * FrameWidth >= image.texture.Width - FrameWidth)
+                        currentFrame.X = 1;
                 }
             }
+            else
+            {
+                if (Player.Instance.Jumping)
+                    currentFrame.X = 3;
+                else
+                    currentFrame.X = 0;
 
+                FrameCounter = 0;
+            }
+
+            //Dibuja el sprite en la posición correspondiente
             image.sourceRect = new Rectangle((int)currentFrame.X * FrameWidth, (int)currentFrame.Y * FrameHeight,
                                             FrameWidth, FrameHeight);
         }

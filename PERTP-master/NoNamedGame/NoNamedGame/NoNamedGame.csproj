@@ -45,9 +45,11 @@
     <Compile Include="Game1.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="ImageEffects\SpriteSheetEffect.cs" />
+    <Compile Include="Layer.cs" />
     <Compile Include="Managers\ScreenManager.cs" />
     <Compile Include="Managers\InputManager.cs" />
     <Compile Include="Managers\XMLManager.cs" />
+    <Compile Include="Map.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -56,6 +58,7 @@
     <Compile Include="Screens\MenuScreen.cs" />
     <Compile Include="Screens\Screen.cs" />
     <Compile Include="Screens\SplashScreen.cs" />
+    <Compile Include="Tile.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
@@ -111,8 +114,8 @@
     <Content Include="Content\SplashImages\SplashImage2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Player.xml" />
     <Content Include="Icon.ico" />
+    <Content Include="Maps\Map1.xml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

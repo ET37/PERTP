@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<Player>
-  <Image>
-    <path>Gameplay/player</path>
-  </Image>
-  <MoveSpeed>100</MoveSpeed>
-</Player>
