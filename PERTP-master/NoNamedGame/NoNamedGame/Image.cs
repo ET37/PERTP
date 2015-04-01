@@ -20,7 +20,11 @@ namespace NoNamedGame
         public Vector2 speed;
         public Vector2 position;
         public Vector2 scale;
-        public String fontName, text, path;
+        public String fontName, text;
+        
+        [XmlElement("path")]
+        public string path;
+
         public float alpha;
         public Boolean isActive;
 

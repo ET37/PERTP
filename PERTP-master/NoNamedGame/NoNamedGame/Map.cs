@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -11,6 +12,7 @@ namespace NoNamedGame
 {
     public class Map
     {
+        [XmlElement("Layer")]
         public List<Layer> Layer;
         public Vector2 TileDimensions;
 

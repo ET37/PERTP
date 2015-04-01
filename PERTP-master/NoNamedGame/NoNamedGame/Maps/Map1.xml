@@ -1,21 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Map>
   <TileDimensions>
-    <X>32</X>
-    <Y>32</Y>
+    <!-- Estos valores indican el alto y ancho de un bloque (X ancho Y alto) -->
+    <X>50</X>
+    <Y>50</Y>
   </TileDimensions>
 
   <Layer>
+    <Image>
+      <!-- El path donde está la textura del bloque -->
+      <path>LevelTextures/floor</path>
+    </Image>
+    <!-- 
+    
+    Dibujado del mapa
+          SINTAXIS:
+          [x:x] => Cada bloque (osea corchetes con un valor x:x) simboliza un bloque
+                   en el mapa. Primer valor: posición en X de la textura.
+                               Segundo valor: posición en Y de la textura.
+          
+          IMPORTANTE
+          Cuando hablo de posición no me refiero a la posición de dibujado en la pantalla,
+          el tema de las posiciones va porque en un mapa se carga un archivo con las texturas
+          del mismo, osea sprites, y lo que hacemos es decirle qué pedazo del sprite agarrar 
+          (osea, que bloque elegir). Por eso:
+          
+          [x:.. => la columna
+          ..:x] => la fila
+          
+          Nose si me expliqué del todo xD Resumiendo: es el mismo funcionamiento que tiene un 
+          sprite cualquiera.
+          
+          AGREGADO
+          Tercer parámetro dentro del corchete
+            1 = solid (solido, no se puede traspasar, colisión)
+            2 = passive (pasivo, se traspasa)
+    -->
     <TileMap>
-      <Row>[0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0]</Row>
-      <Row>[0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0]</Row>
-      <Row>[0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0]</Row>
-      <Row>[0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0]</Row>
-      <Row>[0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0]</Row>
-      <Row>[0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0]</Row>
-      <Row>[0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0]</Row>
-      <Row>[0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0]</Row>
-      <Row>[0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0][0:0]</Row>
+      <Row>[1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1]</Row>
+      <Row>[1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1]</Row>
+      <Row>[1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1][1:0:1]</Row>
     </TileMap>
   </Layer>
 </Map>
