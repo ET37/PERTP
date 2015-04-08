@@ -41,12 +41,8 @@ namespace NoNamedGame.Managers
             {
                 //Si instance es null, crea una nueva instancia usando el constructor privado
                 if (instance == null)
-                {
-                    //Se instancia desde el constructor
-                    instance = new ScreenManager();
+                    instance = new ScreenManager(); //Se instancia desde el constructor
 
-
-                }
                 return instance;
             }
         }
@@ -63,12 +59,14 @@ namespace NoNamedGame.Managers
             //Primero:
             InputManager.Instance.Update();
 
+            currentScreen.Update(gameTime);            
+            Transition(gameTime);
 
             //FPS
             FPSManager.Instance.Update(gameTime);
 
-            currentScreen.Update(gameTime);            
-            Transition(gameTime);
+            //Camera
+            CameraManager.Instance.Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -97,14 +95,6 @@ namespace NoNamedGame.Managers
                 currentScreen.LoadContent(Game1.Instance.Content);
                 isTransitioning = false;
             }
-        }
-
-
-        // |-------------Getters & Setters-------------------|
-
-        public Vector2 GetDimensions()
-        {
-            return this.dimensions;
         }
 
         public void SetDimensions(Vector2 dimensions)

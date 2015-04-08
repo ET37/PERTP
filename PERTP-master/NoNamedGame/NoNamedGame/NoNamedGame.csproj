@@ -46,6 +46,7 @@
     <Compile Include="Image.cs" />
     <Compile Include="ImageEffects\SpriteSheetEffect.cs" />
     <Compile Include="Layer.cs" />
+    <Compile Include="Managers\CameraManager.cs" />
     <Compile Include="Managers\FPSManager.cs" />
     <Compile Include="Managers\ScreenManager.cs" />
     <Compile Include="Managers\InputManager.cs" />

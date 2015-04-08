@@ -53,8 +53,8 @@ namespace NoNamedGame
         private Player()
         {
             //Vectores para l imagen (velocidad(?), posición inicial y tamaño de la imagen)
-            Velocity = new Vector2(100, 400);
-            InitialPos = new Vector2(0, 0);
+            Velocity = new Vector2(150, 400);
+            InitialPos = new Vector2(10, ScreenManager.Instance.dimensions.Y - ScreenManager.Instance.dimensions.Y/4);
             TextureSize = new Vector2(1, 1);
             startedRuning = false;
 
@@ -89,7 +89,7 @@ namespace NoNamedGame
              * que se presiona
              * 
              */
-            if (InputManager.Instance.KeyPressed(Keys.Space) && !Jumping && Falling)
+            if (InputManager.Instance.KeyPressed(Keys.Space) && !Jumping && !Falling)
             {
                 /*
                  * Si aprieto espaciadora y no está saltando, empieza a
@@ -104,7 +104,8 @@ namespace NoNamedGame
             //Saltar!
             saltar(gameTime);
 
-            if (InputManager.Instance.KeyDown(Keys.Left))
+            if (InputManager.Instance.KeyDown(Keys.Left) && 
+                Image.position.X - Velocity.X*gameTime.ElapsedGameTime.TotalSeconds > 0)
             {
                 //Está mirando a la izquierda
                 lookLeft = true;
@@ -120,7 +121,8 @@ namespace NoNamedGame
                 Image.spriteSheetEffect.currentFrame.Y = (lookLeft) ? 1 : 0;
             }
 
-            else if (InputManager.Instance.KeyDown(Keys.Right))
+            else if (InputManager.Instance.KeyDown(Keys.Right) && 
+                Image.position.X + Velocity.X * gameTime.ElapsedGameTime.TotalSeconds < ScreenManager.Instance.dimensions.X)
             {
                 //Está mirando a la derecha, entonces lookLeft es false
                 lookLeft = false;
@@ -150,6 +152,8 @@ namespace NoNamedGame
             }
 
             Image.Update(gameTime);
+
+            CameraManager.Instance.SetFocalPoint(new Vector2(Image.position.X, ScreenManager.Instance.dimensions.Y/2));
         }
 
         public void Draw(SpriteBatch spriteBatch)

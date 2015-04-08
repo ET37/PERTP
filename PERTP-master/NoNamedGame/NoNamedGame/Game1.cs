@@ -101,7 +101,9 @@ namespace NoNamedGame
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin();
+            //Ahora dibuja el área de la CameraManager
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, 
+                null, null, null, null, CameraManager.Instance.ViewMatrix);
             ScreenManager.Instance.Draw(spriteBatch);
             spriteBatch.End();
 
