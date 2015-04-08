@@ -45,7 +45,7 @@ namespace NoNamedGame.Screens
         public override void Update(GameTime gameTime)
         {
             Player.Instance.Update(gameTime);
-            if (!Player.Instance.Jumping)
+            if (!Player.Instance.Jumping && Player.Instance.Falling)
             {
                 if (Player.Instance.Image.position.Y <= ScreenManager.Instance.dimensions.Y)
                     Player.Instance.Image.position.Y += GRAVITY * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -56,8 +56,11 @@ namespace NoNamedGame.Screens
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Player.Instance.Draw(spriteBatch);
+            //Mapa primero ^^
             map.Draw(spriteBatch);
+
+            Player.Instance.Draw(spriteBatch);
+            
         }
     }
 }

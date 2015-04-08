@@ -15,29 +15,30 @@ namespace NoNamedGame
     public class Player
     {
         /* Atributos */
-        public Image  Image;                        //Imagen que contiene el sprite del jugador
+        public Image Image;                        //Imagen que contiene el sprite del jugador
         public Vector2 Velocity;                    //Velocity, eso(?)
 
         private Vector2 InitialPos;
         private Vector2 TextureSize;
 
         private string texturePath;                 //Dirección de la textura del jugador
-        private const float  JUMP_HEIGHT = 100;      //Cuanto de Y subir
-        private float  initialY, finalY;            //Posiciones X,Y que cambian al saltar.
-        private bool   lookLeft;                    //Variable para ver si el mirando a a izquierda o derecha. Mediochotoesto.
+        private const float JUMP_HEIGHT = 100;      //Cuanto de Y subir
+        private float initialY, finalY;            //Posiciones X,Y que cambian al saltar.
+        private bool lookLeft;                    //Variable para ver si el mirando a a izquierda o derecha. Mediochotoesto.
         private bool startedRuning;
         private static Player instance;
 
-        public bool Jumping;                        //Para saber si está saltando o no,así lo afecta o no la gravedad.
-        
+        public bool Jumping;                        //Para saber si está saltando o no.
+        public bool Falling;                        //Diferente a saltar. Si está saltando la gravedad no lo afecta.
+
         /*
          * ♥ ♥ ♥ Singleton ♥ ♥ ♥
          * 
          * -JAJAJAJA
          */
-        public static Player Instance 
+        public static Player Instance
         {
-            get 
+            get
             {
                 if (instance == null)
                     instance = new Player();
@@ -52,8 +53,8 @@ namespace NoNamedGame
         private Player()
         {
             //Vectores para l imagen (velocidad(?), posición inicial y tamaño de la imagen)
-            Velocity    = new Vector2(100, 400);
-            InitialPos  = new Vector2(0, 0);
+            Velocity = new Vector2(100, 400);
+            InitialPos = new Vector2(0, 0);
             TextureSize = new Vector2(1, 1);
             startedRuning = false;
 
@@ -61,15 +62,16 @@ namespace NoNamedGame
             texturePath = "Gameplay/player";
 
             //Cargo la imagen con el sprite
-            Image       = new Image(texturePath, InitialPos, TextureSize, 100);
+            Image = new Image(texturePath, InitialPos, TextureSize, 100);
 
             //Valores por defecto para el salto y visión
-            Jumping     = false;
-            lookLeft    = false;
+            Jumping = false;
+            Falling = true;
+            lookLeft = false;
 
             //Le agrego un efecto para que funcione como sprite
             Image.effects.Add("SpriteSheetEffect");
-            
+
         }
 
         public void LoadContent()
@@ -77,7 +79,7 @@ namespace NoNamedGame
             //Cargo la imagen
             Image.Loadcontent();
             Image.spriteSheetEffect.amountOfFrames = new Vector2(4, 2);
-            Image.spriteSheetEffect.currentFrame   = new Vector2(0);
+            Image.spriteSheetEffect.currentFrame = new Vector2(0);
         }
 
         public void Update(GameTime gameTime)
@@ -87,7 +89,7 @@ namespace NoNamedGame
              * que se presiona
              * 
              */
-            if (InputManager.Instance.KeyPressed(Keys.Space) && !Jumping)
+            if (InputManager.Instance.KeyPressed(Keys.Space) && !Jumping && Falling)
             {
                 /*
                  * Si aprieto espaciadora y no está saltando, empieza a
@@ -113,7 +115,7 @@ namespace NoNamedGame
                 startedRuning = true;
                 //Cambia la posición
                 Image.position.X -= Velocity.X * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                
+
                 //En base a lookLeft, elige un sprite u otro
                 Image.spriteSheetEffect.currentFrame.Y = (lookLeft) ? 1 : 0;
             }
@@ -158,8 +160,6 @@ namespace NoNamedGame
 
         private void saltar(GameTime gameTime)
         {
-            //TODO: Animacion
-
             //Si está saltando...
             if (Jumping)
             {
@@ -173,7 +173,10 @@ namespace NoNamedGame
 
                 //Si La posición en Y es mayor o igual a la Y inicial + lo que salta...
                 if (Image.position.Y <= finalY)
+                {
                     Jumping = false;
+                    Falling = true;
+                }
             }
         }
     }

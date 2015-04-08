@@ -43,16 +43,8 @@ namespace NoNamedGame
 
                 if (playerRect.Intersects(tileRect))
                 {
-                    if (Player.Instance.Velocity.X < 0)
-                        Player.Instance.Image.position.X = tileRect.Right;
-                    else if (Player.Instance.Velocity.X > 0)
-                        Player.Instance.Image.position.X = tileRect.Left - Player.Instance.Image.sourceRect.Width;
-                    else if (Player.Instance.Velocity.Y < 0)
-                        Player.Instance.Image.position.Y = tileRect.Top + 50;
-                    else
-                        Player.Instance.Image.position.Y = tileRect.Top - Player.Instance.Image.sourceRect.Height;
-
-                    //Player.Instance.Velocity = Vector2.Zero;
+                    Player.Instance.Image.position.Y = tileRect.Y - Player.Instance.Image.texture.Height/2 - 1;
+                    Player.Instance.Falling = false;
                 }
             }
         }
