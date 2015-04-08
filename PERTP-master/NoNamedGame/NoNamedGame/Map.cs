@@ -15,6 +15,8 @@ namespace NoNamedGame
         [XmlElement("Layer")]
         public List<Layer> Layer;
         public Vector2 TileDimensions;
+        private Vector2 mapDimensions;
+        public Vector2 MapDimensions { get { return mapDimensions; } }
 
         public Map()
         {
@@ -26,6 +28,8 @@ namespace NoNamedGame
         {
             foreach (Layer l in Layer)
                 l.LoadContent(TileDimensions);
+
+            mapDimensions.X = Layer[0].tiles.Count * TileDimensions.X;
         }
 
         public void Update(GameTime gameTime)

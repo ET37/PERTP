@@ -15,7 +15,7 @@ namespace NoNamedGame.Screens
     {
         private const float GRAVITY = 300;
 
-        private Map map;
+        public Map map;
         private List<Image> drawings;
 
         public InGameScreen()
@@ -44,7 +44,7 @@ namespace NoNamedGame.Screens
 
         public override void Update(GameTime gameTime)
         {
-            Player.Instance.Update(gameTime);
+            Player.Instance.Update(gameTime, map);
             if (!Player.Instance.Jumping && Player.Instance.Falling)
             {
                 if (Player.Instance.Image.position.Y <= ScreenManager.Instance.dimensions.Y)

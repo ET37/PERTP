@@ -82,7 +82,7 @@ namespace NoNamedGame
             Image.spriteSheetEffect.currentFrame = new Vector2(0);
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, Map map)
         {
             Image.isActive = true;
             /* En esta parte controlo el movimiento del personaje según la tecla
@@ -122,7 +122,7 @@ namespace NoNamedGame
             }
 
             else if (InputManager.Instance.KeyDown(Keys.Right) && 
-                Image.position.X + Velocity.X * gameTime.ElapsedGameTime.TotalSeconds < ScreenManager.Instance.dimensions.X)
+                Image.position.X + Velocity.X * gameTime.ElapsedGameTime.TotalSeconds < map.MapDimensions.X - Image.spriteSheetEffect.FrameWidth - 1)
             {
                 //Está mirando a la derecha, entonces lookLeft es false
                 lookLeft = false;
