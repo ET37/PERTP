@@ -111,3 +111,5 @@ C:\Users\Sebastián\Documents\GitHub\PERTP\PERTP-master\NoNamedGame\NoNamedGame\
 C:\Users\Sebastián\Documents\GitHub\PERTP\PERTP-master\NoNamedGame\NoNamedGame\SharpDX.Direct3D9.xml
 C:\Users\Sebastián\Documents\GitHub\PERTP\PERTP-master\NoNamedGame\NoNamedGame\Content\Gameplay\player.png
 C:\Users\Sebastián\Documents\GitHub\PERTP\PERTP-master\NoNamedGame\NoNamedGame\Content\LevelTextures\floor.png
+C:\Users\Ludebe\Documents\GitHub\PERTP\PERTP-master\NoNamedGame\NoNamedGame\Content\Gameplay\player.png
+C:\Users\Ludebe\Documents\GitHub\PERTP\PERTP-master\NoNamedGame\NoNamedGame\Content\LevelTextures\floor.png

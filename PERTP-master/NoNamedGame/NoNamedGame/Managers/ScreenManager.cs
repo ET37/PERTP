@@ -53,13 +53,16 @@ namespace NoNamedGame.Managers
 
         // |-----------------Métodos comunes-------------------|
 
-        public void LoadContent(ContentManager Content) 
+        public void LoadContent(ContentManager Content)
         {
             currentScreen.LoadContent(Content);
         }
 
         public void Update(GameTime gameTime)
         {
+            //FPS
+            FPSManager.Instance.Update(gameTime);
+
             currentScreen.Update(gameTime);
             InputManager.Instance.Update();
             Transition(gameTime);
@@ -68,17 +71,21 @@ namespace NoNamedGame.Managers
         public void Draw(SpriteBatch spriteBatch)
         {
             currentScreen.Draw(spriteBatch);
+
+
+            //FPS
+            FPSManager.Instance.Draw(spriteBatch);
         }
 
         // |------------Métodos propios-----------------------|
 
-        public void ChangeScreen(String screenName) 
+        public void ChangeScreen(String screenName)
         {
             currentScreen = (Screen)Activator.CreateInstance(Type.GetType("NoNamedGame.Screens." + screenName));
             isTransitioning = true;
         }
 
-        private void Transition(GameTime gameTime) 
+        private void Transition(GameTime gameTime)
         {
             if (isTransitioning)
             {
@@ -88,6 +95,7 @@ namespace NoNamedGame.Managers
                 isTransitioning = false;
             }
         }
+
 
         // |-------------Getters & Setters-------------------|
 
