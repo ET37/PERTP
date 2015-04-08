@@ -38,7 +38,6 @@ namespace NoNamedGame.Screens
             //Cargar las imágenes
             foreach (Image image in drawings)
                 image.Loadcontent();
-
         }
 
         

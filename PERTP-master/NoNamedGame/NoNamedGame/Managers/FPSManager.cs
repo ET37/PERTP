@@ -30,7 +30,7 @@ namespace NoNamedGame.Managers
             fps = 0;
             frameCounter = 0;
             milisecondsElapsed = 0;
-            showingFps = true;
+            showingFps = false;
             position = new Vector2(3);
             LoadContent(Game1.Instance.Content);
         }

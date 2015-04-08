@@ -33,6 +33,7 @@ namespace NoNamedGame
         /*
          * ♥ ♥ ♥ Singleton ♥ ♥ ♥
          * 
+         * -JAJAJAJA
          */
         public static Player Instance 
         {

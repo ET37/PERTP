@@ -139,7 +139,6 @@ namespace NoNamedGame.Screens
 
         public override void Update(GameTime gameTime)
         {
-            Managers.InputManager.Instance.Update();
 
             //Mueve los dibujitos por la pantalla :$
             DoTheMove();

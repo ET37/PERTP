@@ -52,7 +52,7 @@ namespace NoNamedGame
                     else
                         Player.Instance.Image.position.Y = tileRect.Top - Player.Instance.Image.sourceRect.Height;
 
-                    Player.Instance.Velocity = Vector2.Zero;
+                    //Player.Instance.Velocity = Vector2.Zero;
                 }
             }
         }

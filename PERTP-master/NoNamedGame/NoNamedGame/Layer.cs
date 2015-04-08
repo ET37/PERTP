@@ -17,12 +17,12 @@ namespace NoNamedGame
 
         public class TileMap
         {
-            [XmlElement("Row")]
-            public List<String> Row;
+            [XmlElement("Rows")]
+            public List<String> Rows;
             
             public TileMap()
             {
-                Row = new List<String>();
+                Rows = new List<String>();
             }
         }
 
@@ -43,7 +43,7 @@ namespace NoNamedGame
             Image.Loadcontent();
             Vector2 position = -tileDimensions;
 
-            foreach (string row in Tile.Row)
+            foreach (string row in Tile.Rows)
             {
                 string[] split = row.Split(']');
                 position.X = -tileDimensions.X;

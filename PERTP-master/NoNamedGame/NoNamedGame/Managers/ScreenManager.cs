@@ -60,11 +60,14 @@ namespace NoNamedGame.Managers
 
         public void Update(GameTime gameTime)
         {
+            //Primero:
+            InputManager.Instance.Update();
+
+
             //FPS
             FPSManager.Instance.Update(gameTime);
 
-            currentScreen.Update(gameTime);
-            InputManager.Instance.Update();
+            currentScreen.Update(gameTime);            
             Transition(gameTime);
         }
 
