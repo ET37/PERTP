@@ -44,14 +44,18 @@ namespace NoNamedGame.Screens
 
         public override void Update(GameTime gameTime)
         {
+            map.Update(gameTime);
             Player.Instance.Update(gameTime, map);
+            
             if (!Player.Instance.Jumping && Player.Instance.Falling)
             {
                 if (Player.Instance.Image.position.Y <= ScreenManager.Instance.dimensions.Y)
                     Player.Instance.Image.position.Y += GRAVITY * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
-            map.Update(gameTime);
+            if (Player.Instance.Image.position.Y > ScreenManager.Instance.dimensions.Y - Player.Instance.Image.texture.Height)
+                Player.Instance.Image.position = Player.Instance.InitialPos;
+
         }
 
         public override void Draw(SpriteBatch spriteBatch)

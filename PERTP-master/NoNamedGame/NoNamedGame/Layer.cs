@@ -41,17 +41,19 @@ namespace NoNamedGame
         public void LoadContent(Vector2 tileDimensions) 
         {
             Image.Loadcontent();
+            //?
             Vector2 position = -tileDimensions;
+            int i = 0;
+            position.X = -tileDimensions.X;
+            position.Y = ScreenManager.Instance.dimensions.Y - tileDimensions.Y;
 
             foreach (string row in Tile.Rows)
             {
                 string[] split = row.Split(']');
                 position.X = -tileDimensions.X;
-                position.Y = ScreenManager.Instance.dimensions.Y - tileDimensions.Y;
-               
+                position.Y -= tileDimensions.Y * i;
                 foreach (string s in split)
                 {
-                    
                     if (s != String.Empty)
                     {
                         position.X += tileDimensions.X;
@@ -66,8 +68,9 @@ namespace NoNamedGame
                             value1 * (int)tileDimensions.X, value2 * (int)tileDimensions.Y,
                             (int)tileDimensions.X, (int)tileDimensions.Y), state);
                     }
-
                 }
+
+                i++;
             }
         }
 

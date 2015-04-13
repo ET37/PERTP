@@ -18,7 +18,7 @@ namespace NoNamedGame
         public Image Image;                        //Imagen que contiene el sprite del jugador
         public Vector2 Velocity;                    //Velocity, eso(?)
 
-        private Vector2 InitialPos;
+        public Vector2 InitialPos;
         private Vector2 TextureSize;
 
         private string texturePath;                 //Dirección de la textura del jugador

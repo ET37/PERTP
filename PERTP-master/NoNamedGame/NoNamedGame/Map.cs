@@ -29,7 +29,7 @@ namespace NoNamedGame
             foreach (Layer l in Layer)
                 l.LoadContent(TileDimensions);
 
-            mapDimensions.X = Layer[0].tiles.Count * TileDimensions.X;
+            mapDimensions.X = (Layer[0].tiles.Count * TileDimensions.X) / Layer[0].Tile.Rows.Count;
         }
 
         public void Update(GameTime gameTime)
