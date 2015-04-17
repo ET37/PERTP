@@ -73,6 +73,7 @@
     <Content Include="Content\Gameplay\player.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\LevelTextures\checkpoint.png" />
     <Content Include="Content\LevelTextures\floor.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

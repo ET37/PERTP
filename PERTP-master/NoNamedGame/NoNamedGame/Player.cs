@@ -54,7 +54,7 @@ namespace NoNamedGame
         {
             //Vectores para l imagen (velocidad(?), posición inicial y tamaño de la imagen)
             Velocity = new Vector2(150, 400);
-            InitialPos = new Vector2(10, ScreenManager.Instance.dimensions.Y - ScreenManager.Instance.dimensions.Y/4);
+            InitialPos = new Vector2(10, 0);
             TextureSize = new Vector2(1, 1);
             startedRuning = false;
 

@@ -78,7 +78,9 @@ namespace NoNamedGame
         public void Update(GameTime gameTime)
         {
             foreach (Tile tile in tiles)
+            {
                 tile.Update(gameTime);
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)

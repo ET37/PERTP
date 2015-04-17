@@ -35,24 +35,27 @@ namespace NoNamedGame.Screens
             map = mapLoader.Load("Maps/Map1.xml");
             map.LoadContent();
 
+            //TODO: Encontrarle utilidad a esto, no sirve.
             //Cargar las imágenes
             foreach (Image image in drawings)
                 image.Loadcontent();
-        }
 
-        
+        }
 
         public override void Update(GameTime gameTime)
         {
+            //Updateo el mapa y despues el jugador
             map.Update(gameTime);
             Player.Instance.Update(gameTime, map);
             
+            //Si el jugador saltó y ahora está cayendo
             if (!Player.Instance.Jumping && Player.Instance.Falling)
             {
                 if (Player.Instance.Image.position.Y <= ScreenManager.Instance.dimensions.Y)
                     Player.Instance.Image.position.Y += GRAVITY * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
+            //Si el jugador cayó al vacio (se sale del mapa, osea que su pos. es la del final en Y de la pantalla + tamaño del sprite)
             if (Player.Instance.Image.position.Y > ScreenManager.Instance.dimensions.Y - Player.Instance.Image.texture.Height)
                 Player.Instance.Image.position = Player.Instance.InitialPos;
 
@@ -63,6 +66,7 @@ namespace NoNamedGame.Screens
             //Mapa primero ^^
             map.Draw(spriteBatch);
 
+            //Y ahora el jugador :3
             Player.Instance.Draw(spriteBatch);
             
         }

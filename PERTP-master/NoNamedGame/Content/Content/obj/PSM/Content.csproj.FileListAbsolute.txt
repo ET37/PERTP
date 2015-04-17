@@ -34,3 +34,7 @@ C:\Users\Sebastián\Documents\GitHub\PERTP\PERTP-master\NoNamedGame\Content\Cont
 C:\Users\Sebastián\Documents\GitHub\PERTP\PERTP-master\NoNamedGame\Content\Content\obj\PSM\Content.csprojResolveAssemblyReference.cache
 C:\Users\Sebastián\Documents\GitHub\PERTP\PERTP-master\NoNamedGame\Content\Content\obj\PSM\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\Users\Sebastián\Documents\GitHub\PERTP\PERTP-master\NoNamedGame\Content\Content\obj\PSM\IgnoreMe.dll
+D:\Repositorios\PERTP\PERTP-master\NoNamedGame\Content\Content\bin\PSM\IgnoreMe.dll
+D:\Repositorios\PERTP\PERTP-master\NoNamedGame\Content\Content\obj\PSM\Content.csprojResolveAssemblyReference.cache
+D:\Repositorios\PERTP\PERTP-master\NoNamedGame\Content\Content\obj\PSM\Microsoft.Xna.Framework.RuntimeProfile.txt
+D:\Repositorios\PERTP\PERTP-master\NoNamedGame\Content\Content\obj\PSM\IgnoreMe.dll

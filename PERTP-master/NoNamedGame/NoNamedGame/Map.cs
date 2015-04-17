@@ -26,9 +26,11 @@ namespace NoNamedGame
 
         public void LoadContent()
         {
+            //cargo las capas
             foreach (Layer l in Layer)
                 l.LoadContent(TileDimensions);
 
+            //cambia el ancho del mapa dependiendo de lo largo que sea
             mapDimensions.X = (Layer[0].tiles.Count * TileDimensions.X) / Layer[0].Tile.Rows.Count;
         }
 

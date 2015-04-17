@@ -22,7 +22,7 @@ namespace NoNamedGame
 
         public Vector2 Position
         {
-            get { return position;  }
+            get { return position; }
         }
 
         public void LoadContent(Vector2 position, Rectangle sourceRect, int state)
@@ -35,52 +35,38 @@ namespace NoNamedGame
 
         public void Update(GameTime gameTime)
         {
-                Rectangle tileRect = new Rectangle((int)position.X, (int)position.Y, sourceRect.Width, sourceRect.Height);
-                Rectangle playerRect = new Rectangle((int)Player.Instance.Image.position.X, (int)Player.Instance.Image.position.Y,
-                                                     (int)Player.Instance.Image.sourceRect.Width, (int)Player.Instance.Image.sourceRect.Height);
+            Rectangle tileRect = new Rectangle((int)position.X, (int)position.Y, sourceRect.Width, sourceRect.Height);
+            Rectangle playerRect = new Rectangle((int)Player.Instance.Image.position.X, (int)Player.Instance.Image.position.Y,
+                                                 (int)Player.Instance.Image.sourceRect.Width, (int)Player.Instance.Image.sourceRect.Height);
 
-                if (playerRect.Intersects(tileRect))
+            //Ya que estamos en la clase tile, cambiemos la forma de verlo(?)
+            if (tileRect.Intersects(playerRect))
+            {
+                if (state == 1)
                 {
-                    #region old
-                    //if (state == 1)
-                    //{
-                    //    if (playerRect.Y <= tileRect.Y)
-                    //    {
-                    //        //posiciona a Bostrom encima del tile
-                    //        Player.Instance.Image.position.Y = tileRect.Y - Player.Instance.Image.texture.Height / 2;
-                    //        //Ya no cae
-                    //        Player.Instance.Falling = false;
-                    //    }
-                    //}
-
-
-                    //else
-                    //{
-                    //    Player.Instance.Falling = true;
-                    //}
-                    #endregion
-                    //State 1 = solido // 0 = pasivo
-                    if (state == 1)
+                    //Desde abajo
+                    if (playerRect.Y >= tileRect.Y)
                     {
-                        //Si lo intercepto por arriba
-                        if (playerRect.Y < tileRect.Y)
-                        {
-                            playerRect.Y = tileRect.Y - playerRect.Height / 2;
-                        }
+                        Player.Instance.Jumping = false;
+                        Player.Instance.Falling = true;
                     }
+                    //Desde arriba
+                    else if (playerRect.Y <= tileRect.Y)
+                    {
+                        Player.Instance.Jumping = false;
+                        Player.Instance.Falling = false;
+                    }
+                    //Colision de lado
                     else
                     {
-                        //Si lo intercepto por arriba Y ES PASIVO
-                        if (playerRect.Y < tileRect.Y)
-                        {
-                            Player.Instance.Falling = true;
-                        }
+
                     }
                 }
                 else
                 {
-                    //Player.Instance.Falling = true;
+                    Player.Instance.Falling = true;
                 }
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
