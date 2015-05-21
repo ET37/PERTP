@@ -20,6 +20,7 @@ namespace NoNamedGame.Screens
 
         public InGameScreen()
         {
+            Console.WriteLine("> inGameScreen iniciado");
             drawings = new List<Image>();
         }
 

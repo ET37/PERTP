@@ -46,12 +46,20 @@ namespace NoNamedGame
             int i = 0;
             position.X = -tileDimensions.X;
             position.Y = ScreenManager.Instance.dimensions.Y - tileDimensions.Y;
+            bool first = true;
+            //Invierte las rows
+            Tile.Rows.Reverse();
 
             foreach (string row in Tile.Rows)
             {
                 string[] split = row.Split(']');
                 position.X = -tileDimensions.X;
-                position.Y -= tileDimensions.Y * i;
+
+                if (!first)
+                    position.Y -= tileDimensions.Y;
+                else
+                    first = false;
+
                 foreach (string s in split)
                 {
                     if (s != String.Empty)

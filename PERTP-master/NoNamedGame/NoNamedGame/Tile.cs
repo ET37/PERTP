@@ -42,28 +42,42 @@ namespace NoNamedGame
             //Ya que estamos en la clase tile, cambiemos la forma de verlo(?)
             if (tileRect.Intersects(playerRect))
             {
+                Console.WriteLine(">>Colisión tileRect y PlayerRect");
                 if (state == 1)
                 {
-                    //Desde abajo
-                    if (playerRect.Y >= tileRect.Y)
-                    {
-                        Player.Instance.Jumping = false;
-                        Player.Instance.Falling = true;
-                    }
+                    Console.WriteLine(">>>Tile sólido");
                     //Desde arriba
-                    else if (playerRect.Y <= tileRect.Y)
+                    if (playerRect.Y <= tileRect.Y)
                     {
+                        Console.WriteLine(">>>>Colisión desde arriba");
                         Player.Instance.Jumping = false;
                         Player.Instance.Falling = false;
+                        Player.Instance.Image.position.Y -= tileRect.Y - playerRect.Y;
                     }
-                    //Colision de lado
-                    else
+                    //desde abajo
+                    if (playerRect.Y >= tileRect.Y)
                     {
-
+                        Console.WriteLine(">>>>Colisión desde abajo");
+                        Player.Instance.Falling = true;
+                    }
+                    //Desde izquierda
+                    if (playerRect.X <= tileRect.X &&
+                           (playerRect.Y < tileRect.Y && playerRect.Y + playerRect.Width > tileRect.Y + tileRect.Width))
+                    {
+                        Console.WriteLine(">>>>Colisión desde la izquierda");
+                        Player.Instance.Image.position = new Vector2(tileRect.X - 10, Player.Instance.Image.position.Y);
+                    }
+                    //Desde derecha
+                    if (playerRect.X >= tileRect.X &&
+                          (playerRect.Y < tileRect.Y && playerRect.Y + playerRect.Width > tileRect.Y + tileRect.Width))
+                    {
+                        Console.WriteLine(">>>>Colisión desde la derecha");
+                        Player.Instance.Image.position = new Vector2(tileRect.Width + 10, Player.Instance.Image.position.Y);
                     }
                 }
                 else
                 {
+                    Console.WriteLine(">> Tile pasivo, no hay colisión. Falling = true");
                     Player.Instance.Falling = true;
                 }
             }

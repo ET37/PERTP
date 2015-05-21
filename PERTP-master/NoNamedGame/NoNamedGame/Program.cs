@@ -23,7 +23,7 @@ namespace NoNamedGame
              * a la clase por su instancia
              * */
             using (var game = Game1.Instance)
-                game.Run();
+                 game.Run();
         }
     }
 #endif
